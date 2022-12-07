@@ -13,3 +13,7 @@ npm install --save react-router-dom
 npm install --save styled-components
 // 따로 설치
 ```
+### ✨React 실행
+```
+npm start
+```
