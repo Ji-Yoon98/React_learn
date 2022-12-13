@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "webpack serve --env development"
   },
-  "author": "Park-JiYun",
+  "author": "Park-Jiyun",
   "license": "ISC",
   "dependencies": {
     "react": "^18.2.0",
