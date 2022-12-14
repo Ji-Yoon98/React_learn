@@ -11,7 +11,7 @@ function getNumbers() { // 숫자 네 개를 겹치지 않고 랜덤하게 뽑�
     return array;
 }
 
-class NumberBaseball extends Component {
+class NumberBaseballClass extends Component {
     state = {
         result: '',
         value: '',
@@ -100,4 +100,4 @@ class NumberBaseball extends Component {
     }
 }
 
-export default NumberBaseball; // import NumberBaseball;
+export default NumberBaseballClass; // import NumberBaseball;
