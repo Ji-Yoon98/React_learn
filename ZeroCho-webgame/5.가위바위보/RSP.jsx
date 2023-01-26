@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import useInterval from './useInterval';
 
 // 클래스의 경우 -> constructor -> render -> ref -> componentDidMount
 // (setState/props 바뀔때) -> shouldComponentUpdate(true) -> render -> componentDidUpdate
@@ -49,16 +50,19 @@ const RSP = () => {
     const [result, setResult] = useState('');
     const [imgCoord, setImgCoord] = useState(rspCoords.바위);
     const [score, setScore] = useState(0);
-    const interval = useRef();
+    const [isRunning, setIsRunning] = useState(true);
 
-    useEffect(() => {   // componentDidMount, componentDidUpdate 역할(1대1 대응은 아님)
-        console.log('다시 실행');
-        interval.current = setInterval(changeHand, 100);
-        return () => {     // componentWillUnmount 역할
-            console.log('종료');
-            clearInterval(interval.current);
-        }
-    }, [imgCoord]); 
+    // 커스텀 훅 사용으로 가독성 좋게 만들 수 있음
+    // const interval = useRef();
+
+    // useEffect(() => {   // componentDidMount, componentDidUpdate 역할(1대1 대응은 아님)
+    //     console.log('다시 실행');
+    //     interval.current = setInterval(changeHand, 100);
+    //     return () => {     // componentWillUnmount 역할
+    //         console.log('종료');
+    //         clearInterval(interval.current);
+    //     }
+    // }, [imgCoord]); 
 
     const changeHand = () => {
         if (imgCoord === rspCoords.바위) {
@@ -70,23 +74,29 @@ const RSP = () => {
         }
     };
     
+    useInterval(changeHand, isRunning ? 100 : null);
+
     const onClickBtn = (choice) => () => {
-        clearInterval(interval.current);
-        const myScore = scores[choice];
-        const cpuScore = scores[computerChoice(imgCoord)];
-        const diff = myScore - cpuScore;
-        if (diff === 0) {
-            setResult('비겼습니다!');
-        } else if ([-1, 2].includes(diff)) {
-            setResult('이겼습니다!');
-            setScore((prevState) => prevState + 1);
-        } else {
-            setResult('졌습니다!');
-            setScore((prevState) => prevState - 1);
+        if (isRunning) {     // interval.current
+            // clearInterval(interval.current);
+            setIsRunning(false);
+            const myScore = scores[choice];
+            const cpuScore = scores[computerChoice(imgCoord)];
+            const diff = myScore - cpuScore;
+            if (diff === 0) {
+                setResult('비겼습니다!');
+            } else if ([-1, 2].includes(diff)) {
+                setResult('이겼습니다!');
+                setScore((prevState) => prevState + 1);
+            } else {
+                setResult('졌습니다!');
+                setScore((prevState) => prevState - 1);
+            }
+            setTimeout(() => {
+                // interval.current = setInterval(changeHand, 100);
+                setIsRunning(true);
+            }, 1000);
         }
-        setTimeout(() => {
-            interval.current = setInterval(changeHand, 100);
-        }, 1000);
     };
 
     return (
