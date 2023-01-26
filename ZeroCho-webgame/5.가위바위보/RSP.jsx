@@ -24,6 +24,27 @@ const computerChoice = (imgCoord) => {
         })[0];
 };
 
+// result, imgCoord, score
+// componentDidMount
+// componentDidUpdate
+// componentWillUnmount
+
+// componentDidMount() {    클래스에선 한번에
+//   this.setState({
+//     imgCoord: 3,
+//     score: 1,
+//     result: 2,
+//   })
+// }
+
+// useEffect(() => {    훅스에선 각자 
+//   setImgCoord();
+//   setScore();
+// }, [imgCoord, score]);
+// useEffect(() => {
+//   setResult();
+// }, [result]);
+
 const RSP = () => {
     const [result, setResult] = useState('');
     const [imgCoord, setImgCoord] = useState(rspCoords.바위);
