@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import RSPClass from './RSPClass.jsx';
+import RSP from './RSP.jsx';
 
-ReactDOM.render(<RSPClass />, document.querySelector('#root'));
+ReactDOM.render(<RSP />, document.querySelector('#root'));
